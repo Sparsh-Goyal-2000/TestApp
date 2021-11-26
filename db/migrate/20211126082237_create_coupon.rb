@@ -4,6 +4,7 @@ class CreateCoupon < ActiveRecord::Migration[6.1]
       t.string :code
       t.text :description
       t.date :expiry_date
+      t.integer :status
       t.references :user
       t.timestamps
     end

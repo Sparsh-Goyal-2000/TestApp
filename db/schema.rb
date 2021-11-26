@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2021_11_26_082237) do
     t.string "code"
     t.text "description"
     t.date "expiry_date"
+    t.integer "status"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

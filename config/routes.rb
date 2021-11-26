@@ -3,5 +3,8 @@ Rails.application.routes.draw do
 
   root 'application#home_page'
 
-  get '/send_mail', to: 'application#run_task'
+  get 'expire_coupons', to: 'application#expire_coupons'
+  get 'create_coupons', to: 'application#create_coupons'
+  get 'send_coupons', to: 'application#send_coupons'
+
 end

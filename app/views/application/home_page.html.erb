@@ -1,3 +1,13 @@
 <h1>
-<%= link_to 'Send Coupon Codes', send_mail_path %>
+  <center>
+    <% if flash[:notice] %>
+      <%= flash[:notice] %>
+    <% end %>
+  </center>
+
+  <%= link_to 'Expire Coupon Codes', expire_coupons_path %>
+  <br><br>
+  <%= link_to 'Create Coupon Codes', create_coupons_path %>
+  <br><br>
+  <%= link_to 'Send Coupon Codes', send_coupons_path %>
 </h1>
