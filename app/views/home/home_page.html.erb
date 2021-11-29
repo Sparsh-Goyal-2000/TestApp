@@ -1,0 +1,9 @@
+<h1>
+  <center>
+    <% if flash[:notice] %>
+      <%= flash[:notice] %>
+    <% end %>
+  </center>
+
+  <%= link_to 'Alert Subscriber', alert_subscriber_path %>
+</h1>
