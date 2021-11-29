@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_26_190903) do
+ActiveRecord::Schema.define(version: 2021_11_30_104810) do
 
   create_table "branches", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "address"
@@ -57,6 +57,14 @@ ActiveRecord::Schema.define(version: 2021_11_26_190903) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["branch_id"], name: "index_reservations_on_branch_id"
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
+  end
+
+  create_table "tables", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "branch_id"
+    t.integer "capacity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["branch_id"], name: "index_tables_on_branch_id"
   end
 
 end

@@ -1,12 +1,12 @@
-class CreateReservation < ActiveRecord::Migration[6.1]
+class CreateReservations < ActiveRecord::Migration[6.1]
   def change
     create_table :reservations do |t|
       t.references :branch
       t.references :customer
       t.integer :person_count
-      t.datetime :booking_schedule
-      t.integer :tables_booked, default: 0
-      t.integer :total_amount, default: 0
+      t.datetime :start_at
+      t.integer :tables_booked
+      t.integer :total_amount
 
       t.timestamps
     end

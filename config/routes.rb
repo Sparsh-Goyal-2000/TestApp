@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-  root 'application#home_page'
+  resource :dashboard, only: :show do
+    get 'confirm_reservation'
+  end
 
-  get 'confirm_reservation', to: 'application#confirm_reservation'
+  root 'dashboards#show'
+
 end

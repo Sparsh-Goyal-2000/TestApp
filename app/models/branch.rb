@@ -4,4 +4,5 @@ class Branch < ApplicationRecord
 
   validates :address, :contact, presence: true
   validates :address, uniqueness: true
+
 end
