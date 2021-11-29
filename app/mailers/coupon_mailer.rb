@@ -3,8 +3,7 @@ class CouponMailer < ApplicationMailer
 
   def send_coupon_code(user, coupon)
     @user = user.name
-    @code = coupon.code
-    @valid_upto = coupon.expiry_date
+    @coupon = coupon
     mail to: user.email, subject: 'Special Coupon Code'
   end
 end
