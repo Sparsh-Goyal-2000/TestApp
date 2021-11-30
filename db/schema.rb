@@ -10,19 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_092655) do
+ActiveRecord::Schema.define(version: 2021_11_30_194501) do
 
   create_table "plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
-    t.integer "duration"
+    t.integer "duration_in_days"
     t.integer "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "subscription_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "subscription_id"
+    t.bigint "user_id"
+    t.boolean "enabled", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["subscription_id"], name: "index_subscription_users_on_subscription_id"
+    t.index ["user_id"], name: "index_subscription_users_on_user_id"
+  end
+
   create_table "subscriptions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "owner_id"
     t.bigint "plan_id"
+    t.date "start_date"
     t.date "expiry_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -30,17 +41,10 @@ ActiveRecord::Schema.define(version: 2021_11_29_092655) do
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
   end
 
-  create_table "subscriptions_users", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "subscription_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["subscription_id"], name: "index_subscriptions_users_on_subscription_id"
-    t.index ["user_id"], name: "index_subscriptions_users_on_user_id"
-  end
-
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.decimal "contact", precision: 10
+    t.string "contact"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -2,15 +2,17 @@ class User < ApplicationRecord
 
   has_many :owned_subscriptions, class_name: :Subscription, foreign_key: :owner_id, dependent: :restrict_with_error
 
-  has_and_belongs_to_many :subscriptions
+  has_many :subscription_users
+  has_many :subscriptions, through: :subscription_users
 
   validates :name, :email, presence: true
   validates :email, uniqueness: { case_sensitive: false }
 
-  def active_subscription?
-    subscriptions.each do |subscription|
-      return true if subscription.active?
+  def has_active_subscription_on?(date)
+    subscriptions.inject(false) do |active, subscription|
+      active || subscription.active_on?(date)
     end
-    false
+    active
   end
+
 end

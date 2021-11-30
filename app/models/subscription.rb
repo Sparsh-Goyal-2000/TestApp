@@ -2,38 +2,34 @@ class Subscription < ApplicationRecord
   
   belongs_to :owner, class_name: :User
   belongs_to :plan
-  has_and_belongs_to_many :users, before_add: :check_limits
+  has_many :subscription_users
+  has_many :users, through: :subscription_users
 
-  before_create :check_active_subscriptions
+  validates :start_date, presence: true
+  validate :ensure_user_is_not_an_active_subscriber
+
   before_create :set_expiry_date
 
   after_create_commit :add_owner_to_users
 
-  private def check_active_subscriptions
-    if owner.active_subscription?
-      errors.add(:base, 'User already has an active subscription')
-      throw :abort
-    end
+  def active_on?(date)
+    start_date <= date && expiry_date >= date
+  end
+
+  def remaining_days
+    (expiry_date - Date.today).to_i
+  end
+
+  private def ensure_user_is_not_an_active_subscriber
+    errors.add(:base, 'User already has an active subscription') if owner.has_active_subscription_on?(start_date)
   end
 
   private def set_expiry_date
-    self.expiry_date = Date.today + plan.duration
+    self.expiry_date = start_date + plan.duration_in_days
   end
 
   private def add_owner_to_users
     users << owner
   end
 
-  private def check_limits(user)
-    throw :abort if users.count == 4
-    throw :abort if user.active_subscription?
-  end
-
-  def active?
-    expiry_date >= Date.today
-  end
-
-  def remaining_days
-    (expiry_date - Date.today).to_i
-  end
 end
