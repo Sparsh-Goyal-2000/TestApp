@@ -31,7 +31,6 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'delayed_job_active_record', '4.1.6'
   gem "letter_opener", '~> 1.7.0'
   gem 'whenever', '~> 1.0.0'
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'

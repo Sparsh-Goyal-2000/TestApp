@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(version: 2021_11_30_081900) do
     t.text "description"
     t.datetime "start_at"
     t.datetime "expire_at"
-    t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
