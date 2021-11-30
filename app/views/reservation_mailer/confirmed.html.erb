@@ -11,11 +11,11 @@
     </tr>
     <tr>
       <td>Booking Date</td>
-      <td><%= @reservation.booking_schedule.to_date %></td>
+      <td><%= @reservation.start_at.to_date %></td>
     </tr>
     <tr>
       <td>Booking Time</td>
-      <td><%= @reservation.booking_schedule.to_s(:time) %></td>
+      <td><%= @reservation.start_at.to_s(:time) %></td>
     </tr>
   </table>
 
@@ -37,7 +37,7 @@
             <td><%= line_item.product.category %></td>
             <td><%= line_item.product.name %></td>
             <td><%= line_item.quantity %></td>
-            <td><%= line_item.product.price * line_item.quantity %></td>
+            <td><%= line_item.buying_price * line_item.quantity %></td>
           </tr>
         <% end %>
         <tr>

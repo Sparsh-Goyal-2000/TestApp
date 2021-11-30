@@ -5,8 +5,8 @@ class CreateReservations < ActiveRecord::Migration[6.1]
       t.references :customer
       t.integer :person_count
       t.datetime :start_at
-      t.integer :tables_booked
-      t.integer :total_amount
+      t.datetime :end_at
+      t.integer :total_amount_in_cents
 
       t.timestamps
     end

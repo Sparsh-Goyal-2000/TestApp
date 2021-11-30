@@ -2,25 +2,77 @@ class Reservation < ApplicationRecord
 
   belongs_to :branch
   belongs_to :customer
-  has_many :line_items, dependent: :destroy, after_add: :update_total
 
-  validates :booking_schedule, presence: true
+  has_and_belongs_to_many :tables
+  has_many :line_items, dependent: :destroy, after_add: :increase_total, after_remove: :decrease_total
+
+  validates :start_at, :end_at, :person_count, presence: true
 
   before_validation :book_tables
 
-  def update_total(line_item)
-    update_column(:total_amount, total_amount||0 + line_item.product.price * line_item.quantity )
+  scope :active, -> { where("start_at <= :current_time && end_at >= :current_time", current_time: DateTime.now) }
+
+  def increase_total(line_item)
+    update_column(:total_amount_in_cents, (total_amount_in_cents || 0) + line_item.buying_price_in_cents * line_item.quantity)
+  end
+
+  def decrease_total(line_item)
+    update_column(:total_amount_in_cents, total_amount_in_cents - line_item.buying_price_in_cents * line_item.quantity)
+  end
+
+  def total_amount
+    total_amount_in_cents / 100
   end
 
   def book_tables
-    required_tables = person_count / 4
-    required_tables += 1 if person_count % 4 > 0
-    if required_tables <= branch.vacant_tables
-      self.tables_booked = required_tables
-      branch.update_column(:vacant_tables, branch.vacant_tables-required_tables)
-    else
-      errors.add(:base, 'Tables not available in this branch')
-    end
-  end
+    return if person_count.nil?
 
+    people = person_count
+    if people >= 15
+      branch.tables.where(capacity: 15).each do |table|
+        if table.vacant_for?(self)
+          tables << table
+          people -= 15
+        end
+        break if people < 15
+      end
+    end
+    if people >= 10
+      branch.tables.where(capacity: 10).each do |table|
+        if table.vacant_for?(self)
+          tables << table
+          people -= 10
+        end
+        break if people < 10
+      end
+    end
+    if people >= 6
+      branch.tables.where(capacity: 6).each do |table|
+        if table.vacant_for?(self)
+          tables << table
+          people -= 6
+        end
+        break if people < 6
+      end
+    end
+    if people >= 4
+      branch.tables.where(capacity: 4).each do |table|
+        if table.vacant_for?(self)
+          tables << table
+          people -= 4
+        end
+        break if people < 4
+      end
+    end
+    if people >= 2
+      branch.tables.where(capacity: 2).each do |table|
+        if table.vacant_for?(self)
+          tables << table
+          people -= 2
+        end
+        break if people <= 0
+      end
+    end
+    errors.add(:base, 'Tables not available') if people > 0
+  end
 end
