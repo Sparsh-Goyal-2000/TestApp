@@ -8,7 +8,7 @@ class DashboardsController < ApplicationController
   end
 
   def send_coupons
-    Rake::Task['send_coupons'].execute
+    Rake::Task['coupons:send'].execute
     redirect_to root_path, notice: 'Coupon Sent'
   end
 
