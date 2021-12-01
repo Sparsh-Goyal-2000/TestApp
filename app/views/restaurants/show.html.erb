@@ -1,0 +1,9 @@
+<h1><%= @restaurant.name %></h1>
+<h2><%= @restaurant.address %></h2>
+
+<% @restaurant.categories.order(:position).each do |category| %>
+  <h3><%= category.name %></h3>
+  <% category.products.order(:position).each do |product| %>
+    <p><%= "#{product.name} : #{product.description} -> #{product.price}" %></p>
+  <% end %>
+<% end %>

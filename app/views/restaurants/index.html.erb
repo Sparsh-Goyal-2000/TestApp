@@ -1,0 +1,14 @@
+<div class="container">
+<h1>
+  <center>
+    <% if flash[:alert] %>
+      <%= flash[:alert] %>
+    <% end %>
+  </center>
+<h1>
+
+<h1>Restaurants</h1>
+
+<% @restaurants.each do |restaurant| %>
+  <h3><%= link_to restaurant.name, restaurant_path(restaurant) %></h3>
+<% end %>
