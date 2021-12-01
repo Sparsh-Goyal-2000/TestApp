@@ -4,24 +4,21 @@ class Reservation < ApplicationRecord
   belongs_to :customer
 
   has_and_belongs_to_many :tables
-  has_many :line_items, dependent: :destroy, after_add: :increase_total, after_remove: :decrease_total
+  has_many :line_items, dependent: :destroy
 
   validates :start_at, :end_at, :person_count, presence: true
+  validate :ensure_start_at_less_than_end_at
 
   before_validation :book_tables
 
-  scope :active, -> { where("start_at <= :current_time && end_at >= :current_time", current_time: DateTime.now) }
+  scope :active, -> { where("start_at <= :current_time && end_at >= :current_time", current_time: DateTime.current) }
 
-  def increase_total(line_item)
-    update_column(:total_amount_in_cents, (total_amount_in_cents || 0) + line_item.buying_price_in_cents * line_item.quantity)
-  end
-
-  def decrease_total(line_item)
-    update_column(:total_amount_in_cents, total_amount_in_cents - line_item.buying_price_in_cents * line_item.quantity)
+  def update_total
+    update_column(:total_amount_in_cents, line_items.sum("buying_price_in_cents * quantity"))
   end
 
   def total_amount
-    total_amount_in_cents / 100
+    total_amount_in_cents / 100.0
   end
 
   def book_tables
@@ -64,7 +61,7 @@ class Reservation < ApplicationRecord
         break if people < 4
       end
     end
-    if people >= 2
+    if people >= 1
       branch.tables.where(capacity: 2).each do |table|
         if table.vacant_for?(self)
           tables << table
@@ -74,5 +71,9 @@ class Reservation < ApplicationRecord
       end
     end
     errors.add(:base, 'Tables not available') if people > 0
+  end
+
+  private def ensure_start_at_less_than_end_at
+    errors.add(:base, 'Start at must be less than end at') if start_at >= end_at
   end
 end

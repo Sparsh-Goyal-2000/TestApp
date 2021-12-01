@@ -6,7 +6,7 @@ class BranchProduct < ApplicationRecord
   validates :price_in_cents, presence: true
 
   def price
-    price_in_cents / 100
+    price_in_cents / 100.0
   end
 
 end

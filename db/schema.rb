@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_30_162501) do
+ActiveRecord::Schema.define(version: 2021_12_01_162333) do
 
   create_table "branch_products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "branch_id"
     t.bigint "product_id"
     t.integer "price_in_cents"
-    t.string "status", default: "available"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "available", default: true
     t.index ["branch_id"], name: "index_branch_products_on_branch_id"
     t.index ["product_id"], name: "index_branch_products_on_product_id"
   end

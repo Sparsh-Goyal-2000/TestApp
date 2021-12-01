@@ -8,10 +8,8 @@ class Table < ApplicationRecord
   end
 
   def vacant_for?(new_reservation)
-    reservations.each do |reservation|
-      return false if reservation.start_at <= new_reservation.end_at && reservation.end_at >= new_reservation.start_at
+    reservations.none? do |reservation|
+      reservation.start_at <= new_reservation.end_at && reservation.end_at >= new_reservation.start_at
     end
-    return true
   end
-
 end
