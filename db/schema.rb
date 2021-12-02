@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_081108) do
   create_table "combo_products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "combo_id"
     t.bigint "product_id"
-    t.integer "quantity", default: 1
+    t.integer "quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["combo_id"], name: "index_combo_products_on_combo_id"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_081108) do
     t.bigint "order_id"
     t.bigint "product_id"
     t.integer "quantity"
-    t.integer "buying_price_in_cents"
+    t.integer "unit_price_in_cents"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["order_id"], name: "index_line_items_on_order_id"
@@ -64,8 +64,8 @@ ActiveRecord::Schema.define(version: 2021_12_01_081108) do
     t.string "name"
     t.text "description"
     t.integer "price_in_cents"
-    t.boolean "is_combo", default: false
-    t.boolean "available", default: true
+    t.string "kind"
+    t.boolean "is_available", default: true
     t.boolean "in_stock", default: true
     t.integer "position"
     t.bigint "category_id"

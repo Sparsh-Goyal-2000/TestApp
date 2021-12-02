@@ -3,6 +3,6 @@ class Customer < ApplicationRecord
   has_many :orders, dependent: :destroy
 
   validates :name, :email, presence: true
-  validates :email, uniqueness: { case_sensitive:  false }
+  validates :email, uniqueness: { case_sensitive:  false }, allow_blank: true
 
 end

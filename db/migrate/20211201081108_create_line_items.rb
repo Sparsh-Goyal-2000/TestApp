@@ -4,7 +4,7 @@ class CreateLineItems < ActiveRecord::Migration[6.1]
       t.references :order
       t.references :product
       t.integer :quantity
-      t.integer :buying_price_in_cents
+      t.integer :unit_price_in_cents
 
       t.timestamps
     end
