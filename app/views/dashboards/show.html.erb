@@ -1,0 +1,9 @@
+<h1>
+  <center>
+    <% if flash[:notice] %>
+      <%= flash[:notice] %>
+    <% end %>
+  </center>
+
+  <%= link_to 'Confirm Reservation', confirm_reservation_dashboard_path %>
+</h1>

@@ -1,0 +1,56 @@
+<h3>Hi <%= @reservation.customer.name.titleize %>!</h3>
+<p>
+
+  Congrats, Your booking for <%= @reservation.person_count %> guests has been successfully made.
+  <br><br>
+  Here, is the booking details for the same:
+  <table>
+    <tr> 
+      <td>Branch Address</td>
+      <td><%= @reservation.branch.address %></td>
+    </tr>
+    <tr>
+      <td>Booking Date</td>
+      <td><%= @reservation.start_at.to_date %></td>
+    </tr>
+    <tr>
+      <td>Booking Time</td>
+      <td><%= @reservation.start_at.to_s(:time) %></td>
+    </tr>
+  </table>
+
+  <%= image_tag attachments['wallpaper'].url %>
+
+  <% if @line_items.exists? %>
+    <table>
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Category</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @line_items.each_with_index do |line_item, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= line_item.product.category %></td>
+            <td><%= line_item.product.name %></td>
+            <td><%= line_item.quantity %></td>
+            <td><%= line_item.buying_price * line_item.quantity %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <th colspan="4">Total</th>
+          <th>Rs. <%= @reservation.total_amount %></th>
+      </tbody>
+    </table>
+  <% end %>
+  <br>
+
+  Thanks for booking.
+  <br>
+  Hope you enjoy your day.
+</p>
