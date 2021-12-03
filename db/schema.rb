@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_01_081108) do
+ActiveRecord::Schema.define(version: 2021_12_03_210730) do
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_081108) do
     t.string "name"
     t.text "description"
     t.integer "price_in_cents"
-    t.string "kind"
+    t.integer "kind", default: 0
     t.boolean "is_available", default: true
     t.boolean "in_stock", default: true
     t.integer "position"
