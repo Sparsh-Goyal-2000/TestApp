@@ -2,10 +2,7 @@ namespace :coupons do
   desc "Create coupons for all the users"
   task create: :environment do
     User.find_each do |user|
-      unique_code = loop do
-        random_code = Faker::Code.unique.asin
-        break random_code unless Coupon.exists?(code: random_code)
-      end
+      unique_code = CodeGenerator.call('Coupon', 'code', 8)
       coupon = user.coupons.create(code: unique_code, description: 'Special Off', start_at: DateTime.current, expire_at: DateTime.current + 1.day)
       puts "Created coupon code #{coupon.code} for user #{user.name}"
     end
