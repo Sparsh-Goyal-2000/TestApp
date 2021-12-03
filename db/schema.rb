@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_162333) do
     t.integer "price_in_cents"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "available", default: true
+    t.boolean "is_available", default: true
     t.index ["branch_id"], name: "index_branch_products_on_branch_id"
     t.index ["product_id"], name: "index_branch_products_on_product_id"
   end

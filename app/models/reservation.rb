@@ -74,6 +74,8 @@ class Reservation < ApplicationRecord
   end
 
   private def ensure_start_at_less_than_end_at
+    return unless start_at && end_at
+
     errors.add(:base, 'Start at must be less than end at') if start_at >= end_at
   end
 end

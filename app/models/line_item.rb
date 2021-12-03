@@ -6,7 +6,7 @@ class LineItem < ApplicationRecord
 
   validates :quantity, :buying_price_in_cents, presence: true
 
-  before_validation :set_price
+  before_validation :set_price, on: :create
   after_save :update_total_amount
 
   def buying_price
