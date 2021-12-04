@@ -1,0 +1,2 @@
+class Cricket < Coaching
+end

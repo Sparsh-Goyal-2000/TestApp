@@ -1,0 +1,2 @@
+class TableTennis < Coaching
+end

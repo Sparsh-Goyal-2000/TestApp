@@ -1,0 +1,2 @@
+class Squash < Coaching
+end

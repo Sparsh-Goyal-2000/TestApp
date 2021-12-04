@@ -1,0 +1,2 @@
+class Tennis < Coaching
+end
