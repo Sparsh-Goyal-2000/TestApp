@@ -1,10 +1,6 @@
 class Product < ApplicationRecord
 
-  enum kind: {
-    food: 0,
-    drink: 1,
-    combo: 2
-  }
+  enum kind: [:food, :drink, :combo]
 
   belongs_to :category
   has_one :restaurant, through: :category

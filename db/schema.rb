@@ -64,13 +64,13 @@ ActiveRecord::Schema.define(version: 2021_12_03_210730) do
     t.string "name"
     t.text "description"
     t.integer "price_in_cents"
-    t.integer "kind", default: 0
     t.boolean "is_available", default: true
     t.boolean "in_stock", default: true
     t.integer "position"
     t.bigint "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "kind", default: 0
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
