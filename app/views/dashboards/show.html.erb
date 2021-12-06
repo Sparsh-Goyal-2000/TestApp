@@ -1,0 +1,9 @@
+<h1>
+  <center>
+    <% if flash[:notice] %>
+      <%= flash[:notice] %>
+    <% end %>
+  </center>
+
+  <%= link_to 'Send Coupon Codes', send_coupons_dashboard_path %>
+</h1>
