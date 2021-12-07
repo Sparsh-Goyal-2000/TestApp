@@ -10,19 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_04_093322) do
+ActiveRecord::Schema.define(version: 2021_12_07_074724) do
 
   create_table "batches", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "branch_id"
     t.bigint "coaching_id"
-    t.string "coach_name"
+    t.string "coach"
     t.integer "players_limit"
     t.integer "players_count"
-    t.integer "start_at_in_HH"
-    t.integer "end_at_in_HH"
+    t.time "start_at"
+    t.time "end_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["branch_id"], name: "index_batches_on_branch_id"
     t.index ["coaching_id"], name: "index_batches_on_coaching_id"
   end
 
@@ -36,10 +34,13 @@ ActiveRecord::Schema.define(version: 2021_12_04_093322) do
   end
 
   create_table "coachings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "head_name"
-    t.string "sports_type"
+    t.bigint "branch_id"
+    t.bigint "sport_id"
+    t.string "head_coach"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["branch_id"], name: "index_coachings_on_branch_id"
+    t.index ["sport_id"], name: "index_coachings_on_sport_id"
   end
 
   create_table "players", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -59,6 +60,14 @@ ActiveRecord::Schema.define(version: 2021_12_04_093322) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["batch_id"], name: "index_registrations_on_batch_id"
     t.index ["player_id"], name: "index_registrations_on_player_id"
+  end
+
+  create_table "sports", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "equipments"
+    t.integer "team_size"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

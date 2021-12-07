@@ -1,2 +1,0 @@
-class Badminton < Coaching
-end
